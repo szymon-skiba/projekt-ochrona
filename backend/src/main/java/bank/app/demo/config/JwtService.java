@@ -14,6 +14,7 @@ import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import java.util.function.Function;
 
 @Service
@@ -25,6 +26,10 @@ public class JwtService {
         return extractClaim(token, Claims::getSubject);
     }
 
+    public String extractStatusToken(String token) {
+        return extractClaim(token, claims -> claims.get("statusToken", String.class));
+    }
+
     public String generateToken(
             UserDetails userDetails) {
         return generateToken(new HashMap<>(), userDetails);
@@ -33,6 +38,11 @@ public class JwtService {
     public String generateToken(
             Map<String, Object> extraClaims,
             UserDetails userDetails) {
+
+        UUID uuid = UUID.randomUUID();
+        String statusToken = uuid.toString();
+
+        extraClaims.put("statusToken", statusToken);
         return Jwts
                 .builder()
                 .setClaims(extraClaims)

@@ -33,8 +33,6 @@ public class User implements UserDetails {
     @Nullable
     private LocalDateTime lastLogin;
     @Builder.Default
-    private int failLoginCount = 0;
-    @Builder.Default
     private int loginCount = 0;
     @Builder.Default
     private Boolean banned = false;

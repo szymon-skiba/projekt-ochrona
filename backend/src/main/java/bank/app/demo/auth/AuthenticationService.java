@@ -38,25 +38,25 @@ public class AuthenticationService {
     private final PasswordService passwordService;
     private final UserMaskedPasswordRepository userMaskedPasswordRepository;
 
-    public AuthenticationResponse register(RegisterRequest request) {
-        var user = User.builder()
-                .email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .build();
+    // public AuthenticationResponse register(RegisterRequest request) {
+    //     var user = User.builder()
+    //             .email(request.getEmail())
+    //             .password(passwordEncoder.encode(request.getPassword()))
+    //             .build();
 
-        Optional<User> isUser = userRepository.findByEmail(request.getEmail());
+    //     Optional<User> isUser = userRepository.findByEmail(request.getEmail());
 
-        if (isUser.isPresent()) {
-            throw new RuntimeException("User already exists");
-        }
+    //     if (isUser.isPresent()) {
+    //         throw new RuntimeException("User already exists");
+    //     }
 
-        userRepository.save(user);
+    //     userRepository.save(user);
 
-        var jwt = jwtService.generateToken(user);
-        return AuthenticationResponse.builder()
-                .token(jwt)
-                .build();
-    }
+    //     var jwt = jwtService.generateToken(user);
+    //     return AuthenticationResponse.builder()
+    //             .token(jwt)
+    //             .build();
+    // }
 
     public String authenticate(AuthenticationRequest request) {
         authenticationManager.authenticate(
@@ -104,9 +104,14 @@ public class AuthenticationService {
                     .collect(Collectors.toList());
 
             if (!validUsers.isEmpty() && !(validUsers.size() > 1)) {
-                validUsers.get(0).setPassword(passwordEncoder.encode(request.getPassword()));
-                userRepository.save(validUsers.get(0));
-                passwordService.prepareMaskedPasswords(request.getPassword(), 6, validUsers.get(0).getEmail());
+                User user = validUsers.get(0);
+                user.setPassword(passwordEncoder.encode(request.getPassword()));
+                user.setBanned(false);
+                user.setLoginCount(0);
+                user.setPasswordResetToken(null);
+                user.setPasswordResetTokenExpiration(null);
+                userRepository.save(user);
+                passwordService.prepareMaskedPasswords(request.getPassword(), 6, user.getEmail());
             }
         }
     }
@@ -147,14 +152,14 @@ public class AuthenticationService {
         ServiceResponse<AuthenticationResponse> response = new ServiceResponse<AuthenticationResponse>();
 
         if (user.getBanned()) {
-            response.setData(new AuthenticationResponse("token"));
+            response.setData(new AuthenticationResponse("failed"));
             response.setSuccess(false);
             response.setMessage("Account is banned. Try reseting password or contacting bank.");
         } else {
 
             if (loginCount > 3 && user.getLastLogin().isAfter(oneHourAgo)) {
                 user.setBanned(true);
-                response.setData(new AuthenticationResponse("token"));
+                response.setData(new AuthenticationResponse("failed"));
                 response.setSuccess(false);
                 response.setMessage("Exceded max amount of tries. Account is banned. Try reseting password or contacting bank.");
 
@@ -165,17 +170,18 @@ public class AuthenticationService {
             if (!(passwordEncoder.matches(masked, userMaskedPassword.getMaskedPassword()))) {
                 if (loginCount == 3) {
                     user.setBanned(true);
-                    response.setData(new AuthenticationResponse("token"));
+                    response.setData(new AuthenticationResponse("failed"));
                     response.setSuccess(false);
                     response.setMessage("Exceded max amount of tries. Account is banned. Try reseting password or contacting bank.");
                 }else {
-                    response.setData(new AuthenticationResponse("token"));
+                    response.setData(new AuthenticationResponse("failed"));
                     response.setSuccess(false);
-                    response.setMessage("Failed. 2 tries left.");
+                    response.setMessage("Failed. "+String.valueOf(3-loginCount)+" tries left.");
                 }
             } else {
-                response.setData(new AuthenticationResponse("token"));
-                response.setCookieToken(jwtService.generateToken(user));
+                String jwtToken = jwtService.generateToken(user);
+                response.setData(new AuthenticationResponse(jwtService.extractStatusToken(jwtToken)));
+                response.setCookieToken(jwtToken);
                 response.setSuccess(true);
                 response.setMessage("Success");
             }

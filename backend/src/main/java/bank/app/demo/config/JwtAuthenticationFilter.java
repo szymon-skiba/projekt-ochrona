@@ -31,6 +31,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
+        String authHeader = request.getHeader("Authorization");
         String jwt = null;
         String userEmail = null;
         
@@ -41,7 +42,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 }
             }
         }
-        if(jwt==null){
+
+        if(jwt==null || authHeader==null || !authHeader.startsWith("Bearer ")){
+            filterChain.doFilter(request, response);
+            return;
+        }
+        String csfr_verification = authHeader.substring(7);
+
+        if(!csfr_verification.equals(jwtService.extractStatusToken(jwt))){
             filterChain.doFilter(request, response);
             return;
         }

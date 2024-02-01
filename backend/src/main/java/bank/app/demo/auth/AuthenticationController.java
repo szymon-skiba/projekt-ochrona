@@ -74,19 +74,19 @@ public class AuthenticationController {
             return ResponseEntity.ok().body(new ControllerResponse<AuthenticationResponse>(serviceResponse.getData(), serviceResponse.getSuccess(), serviceResponse.getMessage()));
     }
 
-    @PostMapping("/authenticate")
-    public void authenticate(
-            @RequestBody AuthenticationRequest request, HttpServletResponse response) {
+    // @PostMapping("/authenticate")
+    // public void authenticate(
+    //         @RequestBody AuthenticationRequest request, HttpServletResponse response) {
 
-        String token = service.authenticate(request);
-        ResponseCookie cookie = ResponseCookie.from("token", token)
-                .httpOnly(true)
-                .secure(false)
-                .path("/")
-                .maxAge(cookieExpiry)
-                .build();
+    //     String token = service.authenticate(request);
+    //     ResponseCookie cookie = ResponseCookie.from("token", token)
+    //             .httpOnly(true)
+    //             .secure(false)
+    //             .path("/")
+    //             .maxAge(cookieExpiry)
+    //             .build();
 
-        response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+    //     response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
 
-    }
+    // }
 }
