@@ -5,13 +5,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function handleLogout() {
-        fetch('/api/v1/auth/logout', {
+
+        const statusToken = localStorage.getItem('statusToken');
+        fetch('/api/v1/user/logout', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${statusToken}` 
+            },
             credentials: 'include' 
         })
         .then(response => {
             if (response.ok) {
+                localStorage.removeItem('statusToken');
                 window.location.href = '/';
             } else {
                 alert('Logout failed.');

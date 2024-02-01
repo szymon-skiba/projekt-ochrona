@@ -1,6 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
     ping()
-    fetch('/api/v1/user/transactionHistory', { credentials: 'include' })
+    const statusToken = localStorage.getItem('statusToken');
+    fetch('/api/v1/user/transactionHistory', { 
+        credentials: 'include',
+        headers: { 
+            'Authorization': `Bearer ${statusToken}` 
+        }
+    })
         .then(response => response.json())
         .then(history => {
             const receivedTransactions = history.receivedTransactions.map(trx =>
@@ -17,9 +23,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     function ping() {
+        const statusToken = localStorage.getItem('statusToken');
         fetch('/api/v1/user/ping', {
             method: 'GET',
-            credentials: 'include'
+            credentials: 'include',
+            headers: { 
+                'Authorization': `Bearer ${statusToken}` 
+            }
         }).then(response => {
             if (!response.ok) {
                 window.location.href = '/';

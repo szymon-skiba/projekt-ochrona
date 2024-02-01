@@ -22,10 +22,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const receiverAddress = `${city}, ${street} ${streetNumber}`;
         const transferData = { receiverAccount, amount, title, receiverName, receiverAddress };
+        const statusToken = localStorage.getItem('statusToken');
 
         fetch('/api/v1/transaction', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${statusToken}` 
+            },
             body: JSON.stringify(transferData),
             credentials: 'include'
         }).then(response => {
@@ -54,9 +58,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function ping(){
+        const statusToken = localStorage.getItem('statusToken');
         fetch('/api/v1/user/ping', {
             method: 'GET',
-            credentials: 'include'
+            credentials: 'include',
+            headers: { 
+                'Authorization': `Bearer ${statusToken}` 
+            }
         }).then(response => {
             if (!response.ok) {
                 window.location.href = '/';

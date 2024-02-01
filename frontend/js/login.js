@@ -39,6 +39,10 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(response => response.json())
             .then(data => {
                 requestedChars = data;
+                if(requestedChars==0){
+                    alert('Your account is blocked. Try password reset or contact your local bank!');
+                    window.location.href = '/';
+                }
                 document.getElementById('passwordInstructions').textContent = `Enter the ${requestedChars} characters of your password.`;
                 usernameForm.style.display = 'none';
                 passwordForm.style.display = 'block';
@@ -58,17 +62,20 @@ document.addEventListener('DOMContentLoaded', () => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password }),
             credentials: 'include'
-        }).then(response => {
-            if (response.ok) {
-                let responses = response.json()
-                responses.then(data => {
-                    console.log(data)
-                })
-                window.location.href = 'dashboard.html';
-            } else {
+        }).then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    localStorage.setItem('statusToken', data.data.statusToken);
+                    window.location.href = 'dashboard.html';
+                } else {
+                    alert(data.message || 'Login failed!');
+                    window.location.href = '/';
+                }
+            }).catch(error => {
+                console.error('Error:', error);
                 alert('Login failed!');
-            }
-        }).catch(error => console.error('Error:', error));
+                window.location.href = '/';
+            });
     });
 });
 
