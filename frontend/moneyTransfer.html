@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Money Transfer - Banking App</title>
+    <script src="js/moneyTransfer.js"></script>
+    <script src="js/logout.js"></script>
+</head>
+<body>
+    <h3>Money Transfer</h3>
+    <form id="transferForm">
+        <input type="text" id="receiverAccount" placeholder="Receiver Account (9 digits)" required><br>
+        <input type="text" id="amount" placeholder="Amount (0 - 1,000,000,000)" required><br>
+        <input type="text" id="title" placeholder="Title" required><br>
+        <input type="text" id="receiverName" placeholder="Receiver Name" required><br>
+        <input type="text" id="city" placeholder="City" required><br>
+        <input type="text" id="street" placeholder="Street" required><br>
+        <input type="number" id="streetNumber" placeholder="Street Number" min="1" max="1000" required><br>
+        <button type="submit">Send</button>
+    </form>
+    <a href="dashboard.html">Back to Dashboard</a>
+    <button id="logoutButton">Logout</button>
+</body>
+</html>

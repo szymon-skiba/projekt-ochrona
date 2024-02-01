@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Banking App</title>
+    <script src="js/login.js"></script>
+</head>
+<body>
+    <div id="usernameEntry">
+        <h2>Login</h2>
+        <form id="usernameForm">
+            <input type="email" id="username" placeholder="Username (Email)" required><br>
+            <button type="submit">Next</button>
+        </form>
+    </div>
+
+    <div id="passwordEntry" >
+        <form id="passwordForm" style="display:none;">
+            <p id="passwordInstructions"></p><br>
+            <input type="text" id="partialPassword" placeholder="Password Characters" required><br>
+            <button type="submit">Login</button>
+        </form>
+    </div><br>
+    <button id="resetPasswordButton" onclick="location.href='resetPasswordRequest.html'">Reset Password</button>
+</body>
+</html>

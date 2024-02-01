@@ -1,0 +1,49 @@
+version: "3.7"
+services:
+  mysqldb:
+    image: "mysql:latest"
+    restart: no
+    ports:
+      - 3306:3306
+    networks:
+      - springapimysql-net  
+    environment:
+      MYSQL_DATABASE: bank
+      MYSQL_ROOT_PASSWORD: root
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      interval: 30s
+      timeout: 20s
+      retries: 10
+
+
+  api:
+    depends_on:
+      mysqldb:
+        condition: service_healthy
+    build: ./backend
+    restart: on-failure
+    networks:
+      - springapimysql-net
+    environment:
+      - spring.datasource.url=jdbc:mysql://mysqldb:3306/bank?allowPublicKeyRetrieval=true&useSSL=false
+
+  nginx:
+    image: nginx:latest
+    build: ./nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf/:/etc/nginx/conf.d/:ru
+      - ./nginx/ssl/:/etc/nginx/ssl/:ru
+      - ./frontend:/usr/share/nginx/html
+    depends_on:
+      - api
+    networks:
+      - springapimysql-net
+
+      
+networks:
+  springapimysql-net:
+    driver: bridge
