@@ -30,6 +30,12 @@ public class SecurityConfiguration {
                                                                 .permitAll()
                                                                 .anyRequest()
                                                                 .authenticated())
+                                .headers(header -> 
+                                        header
+                                                .xssProtection()
+                                                .and()
+                                                .contentSecurityPolicy(cs -> cs.policyDirectives("script-src 'self'"))
+                                )       
                                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
                 http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
                 return http.build();

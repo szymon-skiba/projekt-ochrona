@@ -6,6 +6,7 @@
 /home/skib/projekt_ochrona/backend/src/main/java/bank/app/demo/service/TransactionService.java
 /home/skib/projekt_ochrona/backend/src/main/java/bank/app/demo/repository/UserAccountRepository.java
 /home/skib/projekt_ochrona/backend/src/main/java/bank/app/demo/model/entities/UserSensitiveData.java
+/home/skib/projekt_ochrona/backend/src/main/java/bank/app/demo/config/XSSRequestWrapper.java
 /home/skib/projekt_ochrona/backend/src/main/java/bank/app/demo/model/dto/auth/PasswordResetRequest.java
 /home/skib/projekt_ochrona/backend/src/main/java/bank/app/demo/config/SetupDataLoader.java
 /home/skib/projekt_ochrona/backend/src/main/java/bank/app/demo/model/util/PagedResult.java
@@ -13,6 +14,7 @@
 /home/skib/projekt_ochrona/backend/src/main/java/bank/app/demo/service/UserService.java
 /home/skib/projekt_ochrona/backend/src/main/java/bank/app/demo/model/dto/ControllerResponse.java
 /home/skib/projekt_ochrona/backend/src/main/java/bank/app/demo/model/entities/User.java
+/home/skib/projekt_ochrona/backend/src/main/java/bank/app/demo/config/XSSFilter.java
 /home/skib/projekt_ochrona/backend/src/main/java/bank/app/demo/model/dto/auth/RegisterRequest.java
 /home/skib/projekt_ochrona/backend/src/main/java/bank/app/demo/model/dto/auth/PasswordReset.java
 /home/skib/projekt_ochrona/backend/src/main/java/bank/app/demo/auth/AuthenticationService.java
@@ -35,5 +37,6 @@
 /home/skib/projekt_ochrona/backend/src/main/java/bank/app/demo/controller/UserController.java
 /home/skib/projekt_ochrona/backend/src/main/java/bank/app/demo/config/ApplicationConfig.java
 /home/skib/projekt_ochrona/backend/src/main/java/bank/app/demo/controller/TransactionController.java
+/home/skib/projekt_ochrona/backend/src/main/java/bank/app/demo/config/WebConfig.java
 /home/skib/projekt_ochrona/backend/src/main/java/bank/app/demo/BankDemoApplication.java
 /home/skib/projekt_ochrona/backend/src/main/java/bank/app/demo/model/entities/UserAccount.java

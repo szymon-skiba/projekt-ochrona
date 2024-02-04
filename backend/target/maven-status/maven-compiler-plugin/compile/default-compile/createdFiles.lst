@@ -2,11 +2,13 @@ bank/app/demo/model/dto/ServiceResponse$ServiceResponseBuilder.class
 bank/app/demo/model/entities/UserAccount.class
 bank/app/demo/model/dto/auth/AuthenticationRequest$AuthenticationRequestBuilder.class
 bank/app/demo/model/dto/ServiceResponse.class
+bank/app/demo/config/XSSRequestWrapper$1.class
 bank/app/demo/model/dto/TransactionDto.class
 bank/app/demo/model/dto/auth/PasswordReset$PasswordResetBuilder.class
 bank/app/demo/BankDemoApplication.class
 bank/app/demo/model/dto/auth/PasswordResetRequest.class
 bank/app/demo/model/entities/UserSensitiveData.class
+bank/app/demo/config/XSSFilter.class
 bank/app/demo/model/entities/User.class
 bank/app/demo/model/dto/auth/AuthenticationResponse.class
 bank/app/demo/model/dto/TransactionRequest.class
@@ -21,6 +23,7 @@ bank/app/demo/model/dto/TransactionHistory.class
 bank/app/demo/model/dto/SensitiveDataDto$SensitiveDataDtoBuilder.class
 bank/app/demo/controller/TransactionController.class
 bank/app/demo/model/dto/PasswordResetResposne$PasswordResetResposneBuilder.class
+bank/app/demo/config/WebConfig.class
 bank/app/demo/service/AesService.class
 bank/app/demo/model/entities/UserSensitiveData$UserSensitiveDataBuilder.class
 bank/app/demo/model/dto/auth/PasswordReset.class
@@ -49,6 +52,7 @@ bank/app/demo/model/dto/auth/AuthenticationRequest.class
 bank/app/demo/auth/AuthenticationController.class
 bank/app/demo/service/UserService.class
 bank/app/demo/model/util/UserDetails.class
+bank/app/demo/config/XSSRequestWrapper.class
 bank/app/demo/config/JwtAuthenticationFilter.class
 bank/app/demo/model/dto/auth/RegisterRequest$RegisterRequestBuilder.class
 bank/app/demo/model/entities/UserAccount$UserAccountBuilder.class
