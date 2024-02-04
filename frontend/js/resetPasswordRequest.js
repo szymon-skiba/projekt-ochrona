@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     resetForm.addEventListener('submit', event => {
         event.preventDefault();
-        const email = document.getElementById('email').value;
+        const email =  DOMPurify.sanitize(document.getElementById('email').value);
 
         if (!validateEmail(email)) {
             alert('Please enter a valid username.');
@@ -18,7 +18,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (response.ok) {
                 let emialtext = response.json()
                 emialtext.then(data => {
-                    console.log(data)
                     alert('Reset successful. Check your email !!\n' + data.emailtext);
                 })
             } else {
@@ -30,10 +29,5 @@ document.addEventListener('DOMContentLoaded', () => {
     function validateEmail(email) {
         const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
         return re.test(String(email).toLowerCase());
-    }
-
-    function displayMessageAndRedirect() {
-        alert('If the provided information is correct, your password has been reset. Please log in with your new password.');
-        window.location.href = 'index.html';
     }
 });

@@ -7,13 +7,13 @@ document.addEventListener('DOMContentLoaded', () => {
     transferForm.addEventListener('submit', event => {
         event.preventDefault();
 
-        const receiverAccount = document.getElementById('receiverAccount').value;
-        const amount = document.getElementById('amount').value;
-        const title = document.getElementById('title').value;
-        const receiverName = document.getElementById('receiverName').value;
-        const city = document.getElementById('city').value;
-        const street = document.getElementById('street').value;
-        const streetNumber = document.getElementById('streetNumber').value;
+        const receiverAccount =  DOMPurify.sanitize(document.getElementById('receiverAccount').value);
+        const amount =  DOMPurify.sanitize(document.getElementById('amount').value);
+        const title =  DOMPurify.sanitize(document.getElementById('title').value);
+        const receiverName =  DOMPurify.sanitize(document.getElementById('receiverName').value);
+        const city =  DOMPurify.sanitize(document.getElementById('city').value);
+        const street =  DOMPurify.sanitize(document.getElementById('street').value);
+        const streetNumber =  DOMPurify.sanitize(document.getElementById('streetNumber').value);
 
         if (!validateTransferData(receiverAccount, amount, receiverName, city, street, streetNumber)) {
             alert('Invalid input. Please check your entries and try again.');

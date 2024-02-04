@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Please enter a valid email');
             return;
         }
-        email = sanitizeInput(email);
+        email = DOMPurify.sanitize(email);
 
         fetch('/api/v1/auth/maskedLogin/letters', {
             method: 'POST',
@@ -52,10 +52,9 @@ document.addEventListener('DOMContentLoaded', () => {
     passwordForm.addEventListener('submit', event => {
 
         event.preventDefault();
-        console.log(email)
         let password = document.getElementById('partialPassword').value;
 
-        password = sanitizeInput(password)
+        password = DOMPurify.sanitize(password)
 
         fetch('/api/v1/auth/maskedLogin', {
             method: 'POST',

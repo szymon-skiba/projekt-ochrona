@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const resetForm = document.getElementById('resetForm');
-    const token = new URLSearchParams(window.location.search).get('token');
+    const token =  DOMPurify.sanitize(new URLSearchParams(window.location.search).get('token'));
 
     if (!validateToken(token)) {
         displayMessageAndRedirect();
@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     resetForm.addEventListener('submit', event => {
         event.preventDefault();
-        const password = document.getElementById('newPassword').value;
+        const password =  DOMPurify.sanitize(document.getElementById('newPassword').value);
 
         if (!validatePassword(password)) {
             alert('Password must be at least 8 characters long, include at least one number and one uppercase letter.');
