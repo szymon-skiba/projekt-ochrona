@@ -10,13 +10,16 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AesService {
 
-    private static final String PASSWORD = "M0qTyp8RFb8HBtVBSpXNLE3kUEdpZ";
-    private static final String SALT = "mysalt";
+    @Value("${aes.password}")
+    private static String PASSWORD;
+    @Value("${aes.salt}")
+    private static String SALT;
 
     private static final int KEY_LENGTH = 256;
     private static final int ITERATION_COUNT = 65536;
